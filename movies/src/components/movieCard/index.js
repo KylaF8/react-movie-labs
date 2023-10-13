@@ -47,7 +47,7 @@ export default function MovieCard(props) {
           <FavoriteIcon color="primary" fontSize="large" />
         </IconButton>
         <Button variant="outlined" size="medium" color="primary">
-          More Info ...
+          More Info ....
         </Button>
       </CardActions>
     </Card>
