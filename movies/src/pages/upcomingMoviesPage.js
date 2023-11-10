@@ -6,12 +6,13 @@ import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner'; */
 
-import React from "react";
-import PageTemplate from "../components/templateMovieListPage";
+import React, { useContext } from "react";import PageTemplate from "../components/templateMovieListPage";
 import { useQuery } from "react-query";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import Spinner from "../components/spinner";
 import { getUpcomingMovies } from "../api/tmdb-api";
+import { MoviesContext } from "../contexts/moviesContext";
+
 
 const UpcomingMoviesPage = (props) => {
 
@@ -19,6 +20,8 @@ const UpcomingMoviesPage = (props) => {
     "upcomingMovies",
     getUpcomingMovies
   );
+
+  const { addToMustWatch } = useContext(MoviesContext);
 
   if (isLoading) {
     return <Spinner />;
@@ -29,8 +32,8 @@ const UpcomingMoviesPage = (props) => {
   }
 
   const movies = data.results;
-  const favorites = movies.filter((m) => m.favorite);
-  localStorage.setItem("favorites", JSON.stringify(favorites));
+  //const favorites = movies.filter((m) => m.favorite);
+  //localStorage.setItem("favorites", JSON.stringify(favorites));
 
 
  /* const addToFavorites = (movieId) => {
@@ -52,7 +55,15 @@ const UpcomingMoviesPage = (props) => {
       movies={movies}
       //selectFavorite={addToFavorites}
       action={(movie) => {
-        return <PlaylistAddIcon movie={movie}/>;
+        //return <PlaylistAddIcon movie={movie}/>;
+        return (
+          <>
+            <PlaylistAddIcon
+              movie={movie}
+              onClick={() => addToMustWatch(movie)} // Fix this line
+            />
+          </>
+        );
       }}
     />
   );
